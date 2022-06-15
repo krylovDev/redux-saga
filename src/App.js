@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from "react-redux"
 import { decreaseCount, increaseCount } from "./redux/Counter/action"
 import { getLatestNews, getNews } from "./redux/News/action"
-import News from "./components/News/News"
+import NewsList from "./components/News/NewsList"
 
 const App = () => {
 	const count = useSelector((state) => state?.counter?.count)
@@ -31,8 +31,8 @@ const App = () => {
 			<button onClick={handleGetNews}> Get News </button>
 			<h1>{count}</h1>
 			
-			<News news={latestNews} title={'Latest News'}/>
-			<News news={popularNews} title={'Popular News'}/>
+			<NewsList newsList={latestNews} title={'Latest News'}/>
+			<NewsList newsList={popularNews} title={'Popular News'}/>
 			
 		</>
 	);
