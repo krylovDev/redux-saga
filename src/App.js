@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { useDispatch, useSelector } from "react-redux"
+import { decreaseCount, increaseCount } from "./redux/Counter/action"
+import { getLatestNews, getNews } from "./redux/News/action"
+import News from "./components/News/News"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+	const count = useSelector((state) => state?.counter?.count)
+	const latestNews = useSelector((state) => state?.news?.latestNews || [])
+	const popularNews = useSelector((state) => state?.news?.popularNews || [])
+	
+	const dispatch = useDispatch()
+	
+	const handleIncrease = () => {
+		dispatch(increaseCount())
+	}
+	
+	const handleDecrease = () => {
+		dispatch(decreaseCount())
+	}
+	
+	const handleGetNews = () => {
+		dispatch(getNews())
+		// dispatch(getLatestNews())
+	}
+	
+	return (
+		<>
+			<button onClick={handleIncrease}> + </button>
+			<button onClick={handleDecrease}> - </button>
+			<button onClick={handleGetNews}> Get News </button>
+			<h1>{count}</h1>
+			
+			<News news={latestNews} title={'Latest News'}/>
+			<News news={popularNews} title={'Popular News'}/>
+			
+		</>
+	);
+};
 
 export default App;
